@@ -1,0 +1,15 @@
+{
+    "name": "vitor/www",
+    "authors": [
+        {
+            "name": "Vitor Carrilho",
+            "email": "vitor.carrilho@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "src\\":"src/"
+        }
+    }
+}
