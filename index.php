@@ -5,4 +5,6 @@ use src\router\RouterClass;
 
 $uri = $_SERVER['REQUEST_URI']; 
 
-var_dump(new RouterClass($uri));
+$router = new RouterClass($uri);
+
+print_r($router->get('teste','Controller@index'));
