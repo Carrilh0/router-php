@@ -2,7 +2,7 @@
 
 namespace src;
 
-class RouteCollection
+class Dispacher
 {
     
 }
