@@ -43,21 +43,25 @@ class RouteCollection
 
     public function addPost($pattern, $callback)
     {
-
+        $this->routes_post[$this->definePattern($pattern)] = $callback;
+        return $this;
     }
 
     public function addGet($pattern, $callback)
     {
-        
+        $this->routes_get[$this->definePattern($pattern)] = $callback;
+        return $this;
     }
 
     public function addPut($pattern, $callback)
     {
-
+        $this->routes_put[$this->definePattern($pattern)] = $callback;
+        return $this;
     }
 
     public function addDelete($pattern, $callback)
     {
-
+        $this->routes_delete[$this->definePattern($pattern)] = $callback;
+        return $this;
     }
 }
