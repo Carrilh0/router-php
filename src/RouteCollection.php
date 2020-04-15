@@ -4,10 +4,10 @@ namespace src;
 
 class RouteCollection
 {
-    protected $routes_post = [];
-    protected $routes_get = [];
-    protected $routes_put = [];
-    protected $routes_delete = [];
+    protected $routesPost = [];
+    protected $routesGet = [];
+    protected $routesPut = [];
+    protected $routesDelete = [];
 
     public function add($request_type, $pattern, $callback)
     {
@@ -26,13 +26,87 @@ class RouteCollection
                 return $this->addDelete($pattern, $callback);
                 break;
             default:
-                throw new Exception('Tipo de requisição não implementado');
+                throw new \Exception('Tipo de requisição não implementado');
         }
     }
 
     public function where($request_type, $pattern)
     {
+        switch($request_type)
+        {
+            case 'post':
+                return $this->findPost($pattern);
+                break;
+            case 'get':
+                return $this->findGet($pattern);
+                break;
+            case 'put':
+                return $this->findPut($pattern);
+                break;
+            case 'delete':
+                return $this->findDelete($pattern);
+                break;
+            default:
+                throw new \Exception('Tipo de requisição não implementada!');
+        }
+    }
 
+    public function parseUri($uri)
+    {
+        return implode('/', array_filter(explode('/', $uri)));
+    }
+
+    protected function findPost($pattern_sent)
+    {
+        $pattern_sent = $this->parseUri($pattern_sent);
+
+        foreach($this->routesPost as $pattern => $callback)
+        {
+            if(preg_match($pattern, $pattern_sent, $pieces))
+            {
+                return (object) ['callback' => $callback, 'uri' => $pieces];
+            }
+            return false;
+        } 
+    }
+    protected function findGet($pattern_sent)
+    {
+        $pattern_sent = $this->parseUri($pattern_sent);
+
+        foreach($this->routesGet as $pattern => $callback)
+        {
+            if(preg_match($pattern, $pattern_sent, $pieces))
+            {
+                return (object) ['callback' => $callback, 'uri' => $pieces];
+            }
+            return false;
+        } 
+    }
+    protected function findPut($pattern_sent)
+    {
+        $pattern_sent = $this->parseUri($pattern_sent);
+
+        foreach($this->routesPut as $pattern => $callback)
+        {
+            if(preg_match($pattern, $pattern_sent, $pieces))
+            {
+                return (object) ['callback' => $callback, 'uri' => $pieces];
+            }
+            return false;
+        } 
+    }
+    protected function findDelete($pattern_sent)
+    {
+        $pattern_sent = $this->parseUri($pattern_sent);
+
+        foreach($this->routesDelete as $pattern => $callback)
+        {
+            if(preg_match($pattern, $pattern_sent, $pieces))
+            {
+                return (object) ['callback' => $callback, 'uri' => $pieces];
+            }
+            return false;
+        } 
     }
 
     public function definePattern($pattern)
@@ -43,25 +117,25 @@ class RouteCollection
 
     public function addPost($pattern, $callback)
     {
-        $this->routes_post[$this->definePattern($pattern)] = $callback;
+        $this->routesPost[$this->definePattern($pattern)] = $callback;
         return $this;
     }
 
     public function addGet($pattern, $callback)
     {
-        $this->routes_get[$this->definePattern($pattern)] = $callback;
+        $this->routesGet[$this->definePattern($pattern)] = $callback;
         return $this;
     }
 
     public function addPut($pattern, $callback)
     {
-        $this->routes_put[$this->definePattern($pattern)] = $callback;
+        $this->routesPut[$this->definePattern($pattern)] = $callback;
         return $this;
     }
 
     public function addDelete($pattern, $callback)
     {
-        $this->routes_delete[$this->definePattern($pattern)] = $callback;
+        $this->routesDelete[$this->definePattern($pattern)] = $callback;
         return $this;
     }
 }
