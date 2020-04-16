@@ -2,9 +2,9 @@
  
 namespace Src;
  
-use Src\Request;
-use Src\Dispacher;
-use Src\RouteCollection;
+use src\Request;
+use src\Dispacher;
+use src\RouteCollection;
  
 class Router 
 {
