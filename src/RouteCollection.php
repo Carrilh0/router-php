@@ -66,8 +66,8 @@ class RouteCollection
             {
                 return (object) ['callback' => $callback, 'uri' => $pieces];
             }
-            return false;
         } 
+        return false;
     }
     protected function findGet($pattern_sent)
     {
@@ -79,8 +79,8 @@ class RouteCollection
             {
                 return (object) ['callback' => $callback, 'uri' => $pieces];
             }
-            return false;
-        } 
+        }             
+        return false;
     }
     protected function findPut($pattern_sent)
     {
@@ -92,8 +92,8 @@ class RouteCollection
             {
                 return (object) ['callback' => $callback, 'uri' => $pieces];
             }
-            return false;
         } 
+        return false;
     }
     protected function findDelete($pattern_sent)
     {
@@ -106,7 +106,9 @@ class RouteCollection
                 return (object) ['callback' => $callback, 'uri' => $pieces];
             }
             return false;
-        } 
+        }
+        return false;
+
     }
 
     public function definePattern($pattern)

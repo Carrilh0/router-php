@@ -18,6 +18,26 @@ class Router
         $this->dispacher = new Dispacher;
     }
 
+    protected function dispach($route, $namespace = "app\\")
+    {
+        return $this->dispacher->dispach($route->callback, $route->uri, $namespace);
+    }
+
+    protected function notFound()
+    {
+        return header("HTTP/1.0 404 Not Found",true ,404);
+    }
+
+    public function resolve($request)
+    {
+        $route = $this->find($request->method(), $request->uri());
+        if($route)
+        {
+            return $this->dispach($route);
+        }
+        return $this->notFound();
+    }
+
     public function get($pattern, $callback)
     {
         $this->routeCollection->add('get', $pattern, $callback);
@@ -44,7 +64,7 @@ class Router
 
     public function find($requestType, $pattern)
     {
-        return $this->routeCollection->where($requestType);
+        return $this->routeCollection->where($requestType, $pattern);
     }
 
 }
