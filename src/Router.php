@@ -57,6 +57,32 @@ class Router
         return $this->notFound();
     }
 
+    public function route($name, $params)
+    {
+        $pattern = $this->routeCollection->isThereAnyHow($name);
+
+        if($pattern)
+        {
+            $protocol = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+            $server = $_SERVER['SERVER_NAME'] . '/';
+            $uri = [];
+
+            foreach(array_filter(explode('/', $_SERVER['REQUEST_URI'])) as $key => $value)
+            {
+                if($value == 'public')
+                {
+                    $uri[] = $value;
+                    break;
+                }
+                $uri[] = $value;
+            }
+            $uri = implode('/', array_filter($uri)) . '/';
+
+            return $protocol . $server . $uri . $this->routeCollection->convert($pattern, $params);
+        }
+        return false;
+    }
+
     public function get($pattern, $callback)
     {
         $this->routeCollection->add('get', $pattern, $callback);
