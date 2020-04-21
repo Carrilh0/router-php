@@ -218,7 +218,6 @@ class RouteCollection
         }
         return false;
  
-}
     }
 
     public function addPost($pattern, $callback)
