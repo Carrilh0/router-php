@@ -159,7 +159,7 @@ class RouteCollection
             {
                 if(substr($element, 0, 1) === '{')
                 {
-                    $result[preg_filter('/([\{\}]/', '', $element)] = $key -1;
+                    $result[preg_filter('/([\{\}])/', '', $element)] = $key -1;
                 }else {
                     $index = 'value_' . !empty($result) ? count($result) +1 : 1;
                     array_merge($result, [$index => $key -1]);

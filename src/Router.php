@@ -18,9 +18,26 @@ class Router
         $this->dispacher = new Dispacher;
     }
 
-    protected function dispach($route, $namespace = "app\\")
+    protected function getValues($pattern, $positions)
     {
-        return $this->dispacher->dispach($route->callback, $route->uri, $namespace);
+        $result = [];
+
+        $pattern = array_filter(explode('/', $pattern));
+
+        foreach($pattern as $key => $value)
+        {
+            if(in_array($key, $positions))
+            {
+                $result[array_search($key, $positions)] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    protected function dispach($route, $params, $namespace = "app\\")
+    {
+        return $this->dispacher->dispach($route->callback, $params, $namespace);
     }
 
     protected function notFound()
@@ -33,7 +50,9 @@ class Router
         $route = $this->find($request->method(), $request->uri());
         if($route)
         {
-            return $this->dispach($route);
+            $params = $route->callback['values'] ? $this->getValues($request->uri(), $route->callback['values']) : [];
+
+            return $this->dispach($route, $params);
         }
         return $this->notFound();
     }

@@ -4,8 +4,8 @@ $router->get('/', function(){
     echo "Página inicial";
 });
 
-$router->get('/contatos', function(){
-    echo "Página de contatos";
+$router->get('/contatos/{id}/{teste}', function($id, $teste){
+    echo $id,$teste;
 });
 
 
