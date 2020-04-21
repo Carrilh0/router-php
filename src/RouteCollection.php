@@ -190,7 +190,7 @@ class RouteCollection
     {
         if(!is_array($params))
         {
-            $params = [$params];
+            $params = array($params);
         }
 
         $positions = $this->toMap($pattern);
@@ -260,7 +260,7 @@ class RouteCollection
 
         $values = $this->toMap($pattern);
 
-        $this->routesGe[$this->definePattern($pattern)] = [
+        $this->routesGet[$this->definePattern($pattern)] = [
         'callback' => $callback,
         'values' => $values,
         'namespace' => $settings['namespace'] ?? null
@@ -287,7 +287,7 @@ class RouteCollection
 
         $values = $this->toMap($pattern);
 
-        $this->routesPost[$this->definePattern($pattern)] = [
+        $this->routesPut[$this->definePattern($pattern)] = [
         'callback' => $callback,
         'values' => $values,
         'namespace' => $settings['namespace'] ?? null
@@ -314,7 +314,7 @@ class RouteCollection
 
         $values = $this->toMap($pattern);
 
-        $this->routesPost[$this->definePattern($pattern)] = [
+        $this->routesDelete[$this->definePattern($pattern)] = [
         'callback' => $callback,
         'values' => $values,
         'namespace' => $settings['namespace'] ?? null
